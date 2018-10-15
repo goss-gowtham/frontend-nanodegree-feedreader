@@ -80,18 +80,36 @@ $(function() {
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', () => {
 
-    });
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work,  there is at least
          * a single .entry element within the .feed container.
          * Remember,  loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+         beforeEach( (done) => {
+           loadFeed(0,done);
+         });
+         it('ensures loadFeed function is done', () => {
+           expect($('.feed').children().length > 0).toBe(true);   //referred from https://stackoverflow.com/questions/1526873/jquery-if-div-id-has-children
+         });
+       });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', () => {
+        beforeEach( (done) => {
+          loadFeed(0, () => {
+            oldFeed = $('.feed').html();    //has the old content before clicking another feed
+            loadFeed(1,done);
+          });
+        });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember,  loadFeed() is asynchronous.
          */
+         it('checks content is updated', () => {
+           expect($('.feed').html()).not.toBe(oldFeed);   //tests if the content is updated
+         });
+       });
 }());
+//Loved working with this Testing as it's new and interesting!
